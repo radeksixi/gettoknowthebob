@@ -2,41 +2,31 @@
 #include <list>
 #include <wiringPi.h>
 #include <wiringSerial.h>
-
 using namespace std;
-
 void sendCommand(int connectionId, char *command, int waitTime, bool debug);
-//http://wiringpi.com/reference/serial-library/
 
 int main()
 {
-    char * commandStack[] =
-    {
-        "AT\r\n",
-        "AT+RST\r\n",
-        "AT+GMR\r\n",
-        "AT+CWMODE=1\r\n"
-        "AT+CWLAP\r\n",
-        //"AT+CWJAP=\"Fred\'s Network\",\"Leos12072014#\"\r\n",
-        "AT+CIFSR\r\n"
-    };
+    std::list<char *> commandList;
+    
+    commandList.push_back("AT+RST\r\n");
+    commandList.push_back("AT+CWMODE=1\r\n");
+    commandList.push_back("AT+CWJAP=\"NetworkSSID\",\"Password\"\r\n");
+    commandList.push_back("AT+CIFSR\r\n");
 
     wiringPiSetup();
     int connectionId = serialOpen("/dev/ttyAMA0", 115200);
-    int dataAvailable;
 
-    for(int i=0 ; i < 7 ;i++)
+    // Send all commands from stack
+    while(commandList.size() != 0)
     {
         //const char * c = commandStack[i].c_str();
-        sendCommand(connectionId, commandStack[i], 3000, true);
+        sendCommand(connectionId, commandList.front(), 3000, true);
+        commandList.pop_front();
     }
 
-    //dataAvailable = serialDataAvail(connectionId);
-    //while(dataAvailable == 0)
-    //{
-    //    dataAvailable = serialDataAvail(connectionId);
-    //    //if nothing to read something went wrong
-    //}
+    string wait;
+    cin >> wait;
 
     serialClose(connectionId);
 
