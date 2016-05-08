@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include <ESP8266WiFi.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -8,14 +10,13 @@
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature DS18B20(&oneWire);
 float prevTemp = 0;
-const char* MY_SSID = "Fred's Network"; 
-const char* MY_PWD = "Leos12072014#";
 int sent = 0;
 void setup() {
   Serial.begin(115200);
 }
 
 void loop() {
+  
   float temp;
   DS18B20.requestTemperatures(); 
   temp = DS18B20.getTempCByIndex(0);
