@@ -24,4 +24,4 @@ Cheers,
 Radek (Sixi)
 
 
-![alt tag](https://github.com/radek-sixi/gettoknowthebob/blob/master/12814680_1215053051852053_3877968804509799901_n.jpg)
+![alt tag](https://github.com/radeksixi/gettoknowthebob/blob/master/12814680_1215053051852053_3877968804509799901_n.jpg)
